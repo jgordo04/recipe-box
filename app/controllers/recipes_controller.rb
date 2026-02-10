@@ -2,7 +2,7 @@ class RecipesController < ApplicationController
   before_action :set_recipe, only: [:show, :update, :destroy]
 
   def index
-    recipes = Recipe.includes(:ingredients, :steps, :tags)
+    recipes = Recipe.includes(:ingredients, :steps, :tags).order(:title)
     recipes = recipes.joins(:tags).where(tags: { name: params[:tag] }) if params[:tag].present?
     render json: recipes, include: [:ingredients, :steps, :tags]
   end
